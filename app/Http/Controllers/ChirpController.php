@@ -10,6 +10,7 @@ class ChirpController extends Controller
     /**
      * Display a listing of the resource.
      */
+
     public function index()
     {
         $chirps = Chirp::with('user')
@@ -71,7 +72,7 @@ public function store(Request $request)
      */
     public function update(Request $request, string $id)
     {
-        //
+        //        //do something
     }
 
     /**
@@ -79,6 +80,6 @@ public function store(Request $request)
      */
     public function destroy(string $id)
     {
-        //
+        //do something
     }
 }
