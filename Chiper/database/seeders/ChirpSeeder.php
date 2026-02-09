@@ -2,10 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use App\Models\Chirp;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\Hash;
 
 class ChirpSeeder extends Seeder
 {
@@ -17,21 +15,21 @@ class ChirpSeeder extends Seeder
                         User::create([
                             'name' => 'Alice Developer',
                             'email' => 'alice@example.com',
-                            'password' => Hash::make('password'),
+                            'password' => bcrypt('password'),
                         ]),
                         User::create([
                             'name' => 'Bob Builder',
                             'email' => 'bob@example.com',
-                            'password' => Hash::make('password'),
+                            'password' => bcrypt('password'),
                         ]),
                         User::create([
                             'name' => 'Charlie Coder',
                             'email' => 'charlie@example.com',
-                            'password' => Hash::make('password'),
+                            'password' => bcrypt('password'),
                         ]),
                     ])
                     : User::take(3)->get();
-
+ 
         // Sample chirps
         $chirps = [
             'Just discovered Laravel - where has this been all my life? 🚀',
@@ -41,11 +39,10 @@ class ChirpSeeder extends Seeder
             'Who else is loving Blade components?',
             'Friday deploys with Laravel? No problem! 😎',
         ];
-
+ 
         // Create chirps for random users
         foreach ($chirps as $message) {
-            Chirp::create([
-                'user_id' => $users->random()->id,
+            $users->random()->chirps()->create([
                 'message' => $message,
                 'created_at' => now()->subMinutes(rand(5, 1440)),
             ]);

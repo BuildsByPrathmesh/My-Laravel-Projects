@@ -42,12 +42,12 @@ public function store(Request $request)
         'message.required' => 'Please write something to chirp!',
         'message.max' => 'Chirps must be 255 characters or less.',
     ]);
-
+ 
     \App\Models\Chirp::create([
         'message' => $validated['message'],
         'user_id' => null,
     ]);
-
+ 
     return redirect('/')->with('success', 'Your chirp has been posted!');
 }
 
@@ -62,24 +62,30 @@ public function store(Request $request)
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
-    {
-        //
-    }
+    
+public function edit(Chirp $chirp)
+{
+    // We'll add authorization in lesson 11
+    return view('chirps.edit', compact('chirp'));
+}
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //        //do something
-    }
+public function update(Request $request, Chirp $chirp)
+{
+    // Validate
+    $validated = $request->validate([
+        'message' => 'required|string|max:255',
+    ]);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //do something
-    }
+    // Update
+    $chirp->update($validated);
+
+    return redirect('/')->with('success', 'Chirp updated!');
+}
+
+public function destroy(Chirp $chirp)
+{
+    $chirp->delete();
+
+    return redirect('/')->with('success', 'Chirp deleted!');
+}
 }
