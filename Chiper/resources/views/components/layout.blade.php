@@ -51,7 +51,7 @@
 
     <footer class="footer footer-center p-5 bg-base-300 text-base-content text-xs">
         <div>
-            <p>© 2025 Chirper - Built by Prathmesh with Laravel </p>
+            <p>© 2026 Chirper - Built by Prathmesh with Laravel </p>
         </div>
     </footer>
 </body>
