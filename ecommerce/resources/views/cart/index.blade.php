@@ -52,5 +52,15 @@
             @endif
 
         </div>
+        <div class="mt-6 flex justify-end">
+    <form method="POST" action="{{ route('checkout.store') }}">
+        @csrf
+        <button class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">
+            Place Order
+        </button>
+    </form>
+</div>
+
     </div>
 </x-app-layout>
+

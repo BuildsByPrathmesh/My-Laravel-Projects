@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\OrderController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,7 +30,23 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::post('/cart/add/{product}', [CartController::class, 'add'])->name('cart.add');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
-
+    Route::post('/checkout', [OrderController::class, 'store'])->name('checkout.store');    
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+});
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::resource('products', ProductController::class)->except(['index', 'show']);
 });
 
+Route::get('/products', [ProductController::class, 'index'])
+    ->middleware('auth')
+    ->name('products.index');
+
+Route::get('/admin/dashboard', [App\Http\Controllers\AdminController::class, 'index'])
+    ->name('admin.dashboard')
+    ->middleware(['auth', 'admin']);
+
+
 require __DIR__.'/auth.php';
+
+
+
